@@ -41,11 +41,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         //구글로그인 버튼 클릭 -> 구글로그인창 -> 로그인을 완료 -> code로 리턴(OAuth-Client 라이브러리 ) -> AccessToken 요청
         // userRequest 정보 -> loadUser 함수 호출-> 구글로부터 회원프로필 받아준다.
-        System.out.println("getAttributes : " + super.loadUser(userRequest).getAttributes());
+        //System.out.println("getAttributes : " + super.loadUser(userRequest).getAttributes());
         System.out.println("getAttributes : " + oAuth2User.getAttributes());
 
         //회원가입을 강제로 진행해볼 예정
-        String provider = userRequest.getClientRegistration().getClientId(); //google
+        String provider = userRequest.getClientRegistration()
+                //.getClientId(); //google
+                .getRegistrationId(); // facebook
         String providerId = oAuth2User.getAttribute("sub");
         String username = provider+ "_" + providerId; //google_10123912837412 username 중복방지
         String password = bCryptPasswordEncoder.encode("겟인데어");
