@@ -1,11 +1,14 @@
 package com.cos.security1.config.auth;
 
 import com.cos.security1.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Please explain the class!!
@@ -22,12 +25,22 @@ import java.util.Collection;
 // User 오브젝트 타입 => UserDetails 타입 객체
 
 // Security Session => Autentication => UserDetails(PrincipalDetails)
-public class PrincipalDetails implements UserDetails {
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;// 콤포지션
+    private Map<String, Object> attributes;
 
+
+    //일반 로그인 할때 사용하는 생성자
     public PrincipalDetails(User user){
         this.user = user;
+    }
+
+    //OAuth 로그인 할때 사용하는 생성자
+    public PrincipalDetails(User user, Map<String,Object> attributes){
+        this.user = user;
+        this.attributes = attributes;
     }
 
 
@@ -78,4 +91,13 @@ public class PrincipalDetails implements UserDetails {
 
         return true;
     }// 니 계정이 활성화 돼있니? 아니요 true
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+    @Override
+    public String getName() {
+        return null;
+    }
 }
