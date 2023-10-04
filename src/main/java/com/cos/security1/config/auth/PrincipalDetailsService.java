@@ -27,6 +27,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     //시큐리티 session(내부 Authentication(내부 UserDetalis) )
     // 즉, security session 객체의 내부에 Autentication 객체가 Authentication객체의 내부에 UserDetails객체가 들어간다.
+    // 함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {// 파라미터 username 은 loginForm의 name=username
         System.out.println("username : " + username);
