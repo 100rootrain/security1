@@ -1,0 +1,39 @@
+package com.cos.security1.config.oauth.provider;
+
+import java.util.Map;
+
+/**
+ * Please explain the class!!
+ *
+ * @author : kma04
+ * @fileName : NaverUserInfo
+ * @since : 2023-10-05
+ */
+public class NaverUserInfo implements OAuth2UserInfo {
+
+    private Map<String,  Object> attributes; // oAuth2User.getAttributes()
+    //response={id=hs1MSv0d8o9auvJBDBu6AVbIyzsvrxOAZxrXziPeqS0, email=qorehdfkr@naver.com, name=백근우}
+    public NaverUserInfo(Map<String,  Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    @Override
+    public String getProviderId() {
+        return (String) attributes.get("id");
+    } //페이스북은 id 니깐
+
+    @Override
+    public String getProvider() {
+        return "naver";
+    }
+
+    @Override
+    public String getEmail() {
+        return (String) attributes.get("email");
+    }
+
+    @Override
+    public String getName() {
+        return (String) attributes.get("name");
+    }
+}
